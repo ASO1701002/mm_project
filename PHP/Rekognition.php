@@ -14,6 +14,7 @@ use Aws\Rekognition\RekognitionClient;
     addImageToIndex : 顔を新たにコレクションに追加する。
     indexedFaceList : コレクションに追加されている顔のリストを表示する
     deleteIndex : コレクションからメタデータを削除する
+    faceValidation : 顔認証を行い、80%以上の一致率である場合、該当する写真の出力ID(学生ユーザーID)を返す
 */
 ?>
 
@@ -45,7 +46,7 @@ function serchFace($imageName){
         'MaxFaces' => 1,
         'QualityFilter' => 'NONE',
     ]);
-    return $result['FaceMatches']['Face']['Confidence'];
+    return ['Similarity' => $result['FaceMatches']['Face']['Similarity'], 'ExternalImageID' => $result['FaceMatches']['Face']['ExternalImageId']];
 }
 
 function addImageToIndex($ExternalImageID, $imageS3Name){
@@ -110,6 +111,16 @@ function deleteIndex($ExternalImageID){
         }
     }
     return $result;
+}
+
+//顔認証を行い、80%以上の一致率である場合、該当する写真の出力ID(学生ユーザーID)を返す
+function faceValidation($imageName){
+    $validationResult = serchFace($imageName);
+    if($validationResult['Similarity'] > 80){
+        //一致率80%以上の場合認証成功と捉え、[本人の学生ユーザーID,学生ユーザー名,合計出席率,当月の出席率] を返す
+        return $validationResult['ExternalImageID'];
+    }
+    return false;
 }
 
 ////コレクションを作成する。
