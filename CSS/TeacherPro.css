@@ -1,0 +1,58 @@
+p#kyoid{
+    position: absolute;
+    top: 150px;
+    right: 250px;
+    width: 100px;
+    font-size: 20px;
+}
+
+p#name{
+    position: absolute;
+    top: 150px;
+    right: 500px;
+    width: 100px;
+    font-size: 20px;
+
+}
+
+p#class{
+    position: absolute;
+    top: 300px;
+    right: 500px;
+    width: 100px;
+    font-size: 20px;
+}
+div#tanto{
+    position: absolute;
+    top: 300px;
+    right: 300px;
+    width: 100px;
+    font-size: 20px;
+    line-height: 5px;
+}
+
+
+p#asomail{
+    position: absolute;
+    top: 400px;
+    right: 500px;
+    width: 100px;
+    font-size: 20px;
+
+}
+p#tell{
+    position: absolute;
+    top: 500px;
+    right: 500px;
+    width: 100px;
+    font-size: 20px;
+
+}
+p#personaltell{
+    position: absolute;
+    top: 600px;
+    right: 500px;
+    width: 100px;
+    font-size: 20px;
+
+}

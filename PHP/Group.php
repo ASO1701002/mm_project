@@ -96,7 +96,7 @@ $class_list = prepareQuery("select classes.class_id,class_name from classes left
     <link rel="stylesheet" media="all" href="../CSS/All.css">
     <link rel="stylesheet" media="all" href="../CSS/Group.css">
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title>Responsible.html</title>
+    <title>Group.html</title>
 </head>
 <body>
 
@@ -168,22 +168,30 @@ $class_list = prepareQuery("select classes.class_id,class_name from classes left
 </div>
 
 <div id="e">
-追加するグループを選んでください。
+    追加するグループを選んでください。
 </div>
+
 
 <!--フォームタグ-->
 <form action="" id = class_list_select method="get">
-    <?php
-    echo '<div class="addclass">';
-    foreach ($class_list as $row) {
-        echo '<input type="checkbox" value="'.$row['class_id'].'">'.$row['class_name'];
-    }
-    echo '</div>';
-    ?>
-    <input type="button" id="sub" value="OK" onclick=selectClass()>
+    <div class="addclass">
+        <div class="list">
+            <?php
+            foreach ($class_list as $row) {
+                echo '<p><input type="checkbox" value="'.$row['class_id'].'">'.$row['class_name'].'</p>';
+            }
+            ?>
+        </div>
+        <div class="btn">
+            <input type="button" id="sub" value="OK" onclick=selectClass()>
+        </div>
+    </div>
+
     <script type="text/javascript">
         function selectClass() {
+            // 選択されたオプションのバリューを取得する
             var element = document.getElementById("class_list_select");
+            // クラスIDを自分に渡すURLを組み立てる
             var class_list = [];
             for (var i = 0; i < element.length-1; i++) {
                 if (element[i].checked) {

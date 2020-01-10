@@ -126,9 +126,17 @@ if(isset($_POST['class_id']) and isset($_POST['class_name'])){
 
 </div>
 
-<!--    <table>-->
-<!--    <div class="zi">-->
-<!--    <h2 id="zi_label">教室管理</h2>-->
+<div class="zi">
+
+    <h2 id="zi_label">時間割</h2>
+    <tr>
+        <th></th>
+        <th>月曜日</th>
+        <th>火曜日</th>
+        <th>水曜日</th>
+        <th>木曜日</th>
+        <th>金曜日</th>
+    </tr>
 <!--    <tr>-->
 <!--        <th></th>-->
 <!--        <th>月曜日</th>-->
@@ -292,10 +300,12 @@ if(isset($_POST['class_id']) and isset($_POST['class_name'])){
 <!--    </div>-->
 <!--</table>-->
 <!---->
-<!--<!--画面リロード-->-->
-<!--<div class="sub">-->
-<!--    <a href="ResponsibleEdit.html" id="time_ok">決定</a>-->
-<!--</div></form>-->
+</div>
+
+<!--画面リロード-->
+<div class="sub">
+    <a href="ResponsibleEdit.html" id="time_ok">決定</a>
+</div></form>
 
 
 </body>

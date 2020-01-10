@@ -99,16 +99,19 @@ if($_SERVER['REQUEST_METHOD']==='POST'){
         </ul>
         <?php endif; ?>
             <form action="login.php" method="post">
-                <div class="i">
-                    <p >ID</p>
+                <div class="i" style="position: fixed;top: 200px; left: 500px">
+                    <p>ID</p>
                     <p><input type="text" name="teacher_id" placeholder="IDを入力してください。" size="50"　 value="<?php echo $teacher_id=isset($_POST['teacher_id']) ? $_POST['teacher_id']: ''; ?>"></p>
                 </div>
-                <div class="p">
+                <div class="p" style="position: fixed;top: 350px; left: 500px">
                     <p>PASSWORD</p>
                     <p><input type="password" name="password" placeholder="パスワードを入力してください。" size="50"></p>
                 </div>
                 <!--画面遷移-->
-                <button type="submit" id="bub">ログイン</button>
+                <button type="submit" id="bub"　
+                        style="top: 500px;
+                        left: 600px;
+">ログイン</button>
             </form>
         </div>
 
