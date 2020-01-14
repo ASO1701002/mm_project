@@ -11,21 +11,18 @@ require 'db.php';
     //出席情報取得API -electron POST
         //request_flg : "user_search"
         //pc_id : リクエスト元PCのpc_id
-            $_POST['pc_id'] = '11_A';
 
     //クラス出席状況取得API -electron POST
         //request_flg : "getClassAttendanceInfomation"
         //day_week : 何曜日かの数字。月:1 火:2 ・・・
         //time_period : 何限目かの数字。 1限目:1 2限目:2　・・・
         //pc_id : リクエスト元PCのpc_id
-            $_POST['pc_id'] = '11_A';
 
     //時限・授業名取得API -electron POST
         //request_flg : getCurrentSubjct
         //day_week : 何曜日かの数字。月:1 火:2 ・・・
         //time_period : 何限目かの数字。 1限目:1 2限目:2　・・・
         //pc_id : リクエスト元PCのpc_id
-            $_POST['pc_id'] = '11_A';
 
     //出席予定学生一覧取得API -electron POST
         //request_flg : getAttendableStudent
@@ -33,9 +30,13 @@ require 'db.php';
         //time_period : 何限目かの数字。 1限目:1 2限目:2　・・・
         //subject_id : 何の教科かを示す数字。
 
+    //出席用端末登録API -electron POST
+        //request_flg : getPCID
+        //teacher_id : PCの認証を行う管理者アカウントのユーザーID
+        //password : PCの認証を行う管理者アカウントのパスワード
+        //classroom_id : 端末を配置する教室の教室ID
+
     $day = date("Y-m-d");
-    //テストデータ
-    $day = "2019-09-01";
 ?>
 
 <?php
@@ -127,6 +128,17 @@ require 'db.php';
                 print json_encode($attend_data, JSON_PRETTY_PRINT);
             }else{
                 print json_encode(['必須パラメータが送信されていません'], JSON_PRETTY_PRINT);
+            }
+        }
+        //出席用端末認証API -electron
+        if ($_POST['request_flg'] == 'getPCID') {
+            if(isset($_POST['teacher_id']) and isset($_POST['password'])) {
+                $result = prepareQuery('select * from login where login_id = ? and login_password = ?',[$_POST['teacher_id'], $_POST['password']] );
+            }
+            if($result){
+                $pass = substr(base_convert(hash('sha256', uniqid()), 16, 36), 0, 8);
+                prepareQuery('insert into pc_classroom values (?,?)',[$_POST['classroom_id'], $pass]);
+                print json_encode($pass, JSON_PRETTY_PRINT);
             }
         }
     }
