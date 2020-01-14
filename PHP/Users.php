@@ -75,35 +75,35 @@ if(isset($_SESSION['current_class_id']) and isset($_SESSION['current_class_name'
 <!--フォームタグ-->
 <form action="" method="post">
 
-        <!--条件-->
-        <div class="if">
-            &thinsp;&thinsp;&thinsp;&thinsp;
-            <input type="checkbox" id="subject">学科
-            <select>
-                <option>-</option>
-            </select>
-            &thinsp;&thinsp;&thinsp;&thinsp;
+    <!--条件-->
+    <div class="if" style="top: 220px">
+        &thinsp;&thinsp;&thinsp;&thinsp;
+        <input type="checkbox" id="subject">学科
+        <select>
+            <option>-</option>
+        </select>
+        &thinsp;&thinsp;&thinsp;&thinsp;
 
-            <input type="checkbox" id="grade">学年
-            <select>
-                <option>-</option>
-            </select>
-            <br>
-            &thinsp;&thinsp;&thinsp;&thinsp;
+        <input type="checkbox" id="grade">学年
+        <select>
+            <option>-</option>
+        </select>
+        <br>
+        &thinsp;&thinsp;&thinsp;&thinsp;
 
 
-            <input type="checkbox" id="up">出席率
-            <input type="text" id="rate">
-            <select>
-                <option>以上</option>
-            </select>
-            &thinsp;&thinsp;
-            <!--出席率スイッチ-->
-            <input type="checkbox" class="switch1" data-off-label="月別" data-on-label="累計">
+        <input type="checkbox" id="up">出席率
+        <input type="text" id="rate">
+        <select>
+            <option>以上</option>
+        </select>
+        &thinsp;&thinsp;
+        <!--出席率スイッチ-->
+        <input type="checkbox" class="switch1" data-off-label="月別" data-on-label="累計">
 
-            <br>
-        </div>
-</div>
+        <br>
+    </div>
+    </div>
 
 
     <div id="b">
@@ -117,15 +117,15 @@ if(isset($_SESSION['current_class_id']) and isset($_SESSION['current_class_name'
             <input type="checkbox" id="kouz">降順
         </div>
     </div>
-        <div id="c">
-            グループ内検索
-            &thinsp;&thinsp;
-            <!--グループ内スイッチ-->
-            <input type="checkbox" class="switch3" data-off-label="OFF" data-on-label="ON">
-        </div>
+    <div id="c">
+        グループ内検索
+        &thinsp;&thinsp;
+        <!--グループ内スイッチ-->
+        <input type="checkbox" class="switch3" data-off-label="OFF" data-on-label="ON">
+    </div>
     </div>
 
-<a href="" id="d">検索</a>
+    <a href="" id="d">検索</a>
 
 </form>
 

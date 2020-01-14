@@ -1,9 +1,12 @@
 div#sums{
+    right: 650px;
+    bottom: 100px;
     position: absolute;
+    font-size: 20px;
 }
 
+
 button{
-    display: block;
     background-color: #afc6e2;
     -webkit-appearance: unset;
     padding: 10px 20px;
@@ -15,4 +18,68 @@ button{
     color: white;
     margin: 10px;
     border-radius: 3px;
+}
+table{
+    size: 20px;
+    position: absolute;
+    top: 200px;
+    left: 380px;
+    width: 700px;
+
+    height: 300px;
+}
+
+
+th:nth-child(1) {
+    width: 100px;
+}
+th:nth-child(2) {
+    width: 100px;
+}
+th:nth-child(3){
+    width: 150px;
+}
+th:nth-child(4){
+    width: 100px;
+}
+
+
+
+[name=time_period]{
+    float: right;
+    top: 50px;
+    right: 200px;
+    position: relative;
+
+}
+
+#teacher_p{
+    top: 50px;
+    position: absolute;
+    right: 100px;
+}
+
+p#zyug{
+    position: absolute;
+    top: 35px;
+    left: 500px;
+}
+
+#datepicker{
+    top: 50px;
+    position: absolute;
+    right: 300px;
+}
+
+.ui-datepicker table{
+    top: 50px;
+    position: absolute;
+    left: 0;
+    border: 1px solid #ccc; /* 枠線 */
+}
+
+#class_name{
+    left: 750px;
+    top: 50px;
+    position: absolute;
 }

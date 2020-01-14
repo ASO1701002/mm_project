@@ -35,10 +35,6 @@ require 'db.php';
 
 </div>
 
-<!-- 上のメニューバー -->
-<div class="bu">
-    <!--    <a href="AttendanceConfirmation.php" id="attend">状況管理</a>-->
-</div>
 
 <!--検索バー -->
 <div class="container">

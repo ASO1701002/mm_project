@@ -1,0 +1,47 @@
+p#number{
+    top: 130px;
+    position: absolute;
+    right: 450px;
+}
+
+p#subj{
+    top: 230px;
+    position: absolute;
+    right: 470px;
+}
+
+p#stname{
+    top: 330px;
+    position: absolute;
+    right: 470px;
+}
+
+p#stuhum{
+    top: 430px;
+    position: absolute;
+    right: 470px;
+}
+
+a#snumber{
+    top: 150px;
+    position: absolute;
+    right: 300px;
+}
+
+a#subject{
+    top: 245px;
+    position: absolute;
+    right: 310px;
+}
+
+a#name{
+    top: 345px;
+    position: absolute;
+    right: 310px;
+}
+
+a#sex{
+    top: 450px;
+    position: absolute;
+    right: 410px;
+}

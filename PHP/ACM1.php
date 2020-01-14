@@ -71,12 +71,11 @@ try{
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
     <link rel="stylesheet" media="all" href="../CSS/All.css">
-    <link rel="stylesheet" media="all" href="../CSS/Responsible.css">
     <link rel="stylesheet" media="all" href="../CSS/ACMS1.css">
     <link rel="stylesheet" media="all" href="../CSS/Style.css">
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <meta charset="UTF-8">
-    <title>ACMS</title>
+    <title>ACM1</title>
 </head>
 <body>
 <div class="header">
@@ -89,6 +88,9 @@ try{
                 出席簿
             </h1>
         </div>
+    </div>
+</div>
+
         <div id="class" class="title_menu">
             <script type="text/javascript">
                 function selectClass() {
@@ -134,14 +136,10 @@ try{
     </div>
 </div>
 
-
 <!-- 先生の名前 -->
-<a href="./TeacherPro.php" ><?=h($_SESSION['teacher_name']) ?></a>
-<p><?if($subject_name!=null)echo h($subject_name)?></p>
+<a href="./TeacherPro.php" id="teacher_p"><?=h($_SESSION['teacher_name']) ?></a>
+<p id="zyug"><?if($subject_name!=null)echo h($subject_name)?></p>
 
-<!-- 上のメニューバー -->
-<div class="bu">
-</div>
 <!--　検索バー -->
 <div class="container">
     <input type="text" placeholder="Search..." id="sa-ch">
@@ -164,21 +162,20 @@ try{
     <form action="update.php" method="post" >
 
         <!-- 時間割選択 -->
-        <div id="class" class="title_menu">
-            <select name="time_period"  id="time_period" onchange="selectClass()">
-                <?php
-                foreach ($time_period_array as $i => $row){
-                    $htmlText = "<option value='".$row['time']."'";
-                    if($i+1 == $time){$htmlText .= 'selected';}
-                    $htmlText .= ">".$row['time']."限目</option>";
-                    echo $htmlText;
-                } ?>
-            </select>
-        </div>
+
+        <select name="time_period"  id="class_name" onchange="cale()">
+            <?php //$_GET['time']が指定されている場合はselected修飾を付ける。
+            foreach ($time_period_array as $row){
+                $htmlText = "<option value='".$row['time_period']."'";
+                if(isset($_GET['time']) && $i == $_GET['time']){$htmlText .= 'selected';}
+                $htmlText .= ">".$row['time_period']."限目</option>";
+                echo $htmlText;
+            } ?>
+        </select>
 
         <!-- 日付の選択 -->
-        <input name="datepicker" type="text" id="datepicker" onchange="selectClass()" value="<?=$date?>">
-        <ul id="myList"></ul>
+        <input name="datepicker" type="text" id="datepicker" onchange="cale()" value="<? if(!empty($_GET['day']))echo $_GET['day']?>">
+        <ul id="myList">
 
         <?php
             if(!isset($error)){
@@ -220,6 +217,7 @@ try{
                 echo $error.'<br>';
             }
         ?>
+        </ul>
         <input type="hidden" name="class_id" value="<?=$class_id ?>">
         <input type="hidden" name="class_name" value="<?=$class_name ?>">
         <button type=“submit”>変更</button>
@@ -248,6 +246,43 @@ try{
                 $('#datepicker').datepicker('setDate', new Date());
             }
         });
+        function time() {
+
+        }
+
+        function cale () {
+            // クラスIDを自分に渡すURLを組み立てる
+            let datapicker = $('#datepicker').val();
+            // 選択されたオプションのバリューを取得する
+            let date = $("#class_name").val();
+
+
+
+            // クラスIDを自分に渡すURLを組み立てる
+            let params = getParameter();
+            params['class_id'] = <?php echo $class_id ?>;
+            params['class_name'] = "<?php echo $class_name ?>";
+            params['day'] = datapicker;
+            params['time'] = date;
+            let url = setParameter(params);
+            console.log(url);
+
+            location.href = url;
+
+            <?php
+            $_SESSION['time']=$time;
+            ?>
+        }
+
+        //パラメータを設定したURLを返す
+        function setParameter( paramsArray ) {
+            var resurl = location.href.replace(/\?.*$/,"");
+            for ( key in paramsArray ) {
+                resurl += (resurl.indexOf('?') == -1) ? '?':'&';
+                resurl += key + '=' + paramsArray[key];
+            }
+            return resurl;
+        }
 
         //パラメータを取得する
         function getParameter(){
