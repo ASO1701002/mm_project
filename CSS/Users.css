@@ -250,13 +250,15 @@ body{
     padding: 10px 20px;
     position: fixed;
     box-sizing: border-box;
-    right: 435px;
-    bottom: 30px;
+    right: 135px;
+    bottom: 50px;
     text-decoration: none;
     color: white;
     border-radius: 3px;
 }
-
-div#sums{
-
+div.if{
+    width: fit-content;
+    font-size:20px;
+    position: absolute;
+    left: 350px;
 }

@@ -1,6 +1,7 @@
 /*編集*/
-.aedit{
+a#aedit{
     display: block;
+    color: white;
     background-color: #afc6e2;
     -webkit-appearance: unset;
     box-sizing: border-box;

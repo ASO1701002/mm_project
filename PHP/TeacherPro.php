@@ -31,10 +31,10 @@ $teacher = prepareQuery("
 <html>
 <head>
     <link rel="stylesheet" media="all" href="../CSS/All.css">
-    <link rel="stylesheet" media="all" href="../CSS/Responsible.css">
+    <link rel="stylesheet" media="all" href="../CSS/TeacherPro.css">
     <link rel="stylesheet" media="all" href="../CSS/Style.css">
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title>Responsible.html</title>
+    <title>TeacherPro.html</title>
 </head>
 <body>
 
@@ -71,11 +71,6 @@ $teacher = prepareQuery("
 
 </div>
 
-<!-- 上のメニューバー -->
-<div class="bu">
-    <!--    <a href="AttendanceConfirmation.php" id="attend">状況管理</a>-->
-</div>
-
 <!--検索バー -->
 <div class="container">
     <input type="text" placeholder="Search..." id="sa-ch">
@@ -92,31 +87,47 @@ $teacher = prepareQuery("
         <li><a href="./logout.php?token=<?=h(generate_token())?>">ログアウト</a></li>
 
     </ul>
-    <p id="kyoid">教師ID<br>
-        <?php echo $teacher[0]['teacher_name'] ?></p>
-        <?php echo '<br>'?>
 
-    <p id="name">名前<br>
-    <?php echo $teacher[0]['teacher_name']; ?><p>
+    <th>
+        <p id="kyoid">教師ID<br>
+            <?php echo $teacher[0]['teacher_name'] ?></p>
         <?php echo '<br>'?>
+    </th>
+
+    <th>
+        <p id="name">名前<br>
+        <?php echo $teacher[0]['teacher_name']; ?><p>
+            <?php echo '<br>'?>
+    </th>
 
     <p id="class">担当クラス<br>
-        <?php foreach ($teacher as $st){ ?>
-        <tr>
-            <p><?=htmlspecialchars($st['class_name']) ?></p>
-        </tr>
-        <?php } $pdo=null; ?>
-    </p>
-    <?php echo '<br>'?>
+        <div id="tanto">
+            <?php foreach ($teacher as $st){ ?>
+            <tr>
+    <p><?=htmlspecialchars($st['class_name']) ?></p>
+    </tr>
+    <?php } $pdo=null; ?>
+</div>
+</p>
+</th>
 
+<th>
+    <?php echo '<br>'?>
     <p id="asomail">麻生メアド<br>
         <?php echo ":".$teacher[0]['asomail'] ?></p>
+</th>
+
+<th>
     <?php echo '<br>'?>
     <p id="tell">内線<br>
         <?php echo ":".$teacher[0]['tell']; ?></p>
+</th>
+
+<th>
     <?php echo '<br>'?>
     <p id="personaltell">個人番号<br>
         0<?php echo ":".$teacher[0]['personalnum']; ?></p>
+</th>
 
 </div>
 </body>

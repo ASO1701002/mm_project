@@ -37,6 +37,7 @@ if(isset($student)){
 <html>
 <head>
     <link rel="stylesheet" media="all" href="../CSS/All.css">
+    <link rel="stylesheet" media="all" href="../CSS/StudentPro.css">
     <link rel="stylesheet" media="all" href="../CSS/Responsible.css">
     <link rel="stylesheet" media="all" href="../CSS/Style.css">
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
@@ -84,40 +85,70 @@ if(isset($student)){
         <li><a href="./logout.php?token=<?=h(generate_token())?>">ログアウト</a></li>
     </ul>
 </div>
-学籍番号<br>
+<p id="number">学籍番号</p>
 <a id="snumber"><?php echo $student['student_id']; ?></a>
-<br><br>
-学科<br>
-<a id="subject"><?php echo h($student['class_name'])?></a>
-<br><br>
-<!--    学年<br>--><!--学年は学科に含まれる-->
-<!--    <a id="grade">--><?php //echo $student[0]['grade']?><!--</a>-->
-<!--    <br><br>-->
-名前<br>
-<a id="name"><?php echo h($student['student_name'])?></a>
-<br><br>
-性別<br>
-<a id="sex"><?php echo $student['sex']?></a>
-<br><br>
+
+<p id="subj">学科</p>
+<a id="subject" style="right: 300px; position: fixed;"><?php echo h($student['class_name'])?></a>
+
+
+<p id="stname">名前</p>
+<a id="name" style="right: 310px; position: fixed;"><?php echo h($student['student_name'])?></a>
+
+
+<p id="stuhum">性別</p>
+<a id="sex" style="right: 330px; position: fixed;"><?php echo $student['sex']?></a>
+
+
+
+
 <!--今月の出席率は新しく追加したので、idがついていないです。必要であれば付けてください。-->
-今月の出席率<br>
-<a><?php echo $student['attend_rate_month'] ?></a>
-<br><br>
-遅刻数<br>
-<a id="late"><?php echo $student['late'] ?></a>
-<br><br>
-欠席数<br>
-<a id="absence"><?php echo $student['absence'] ?></a>
-<br><br>
-早退数<br>
-<a id="absence"><?php echo $student['early'] ?></a>
-<br><br>
-出席率<br>
-<a id="absence"><?php echo $student['attend_rate'] ?></a>
-<br><br>
-<form action="StudentGraph.php" method="get">
+<table style="width: 700px; right: 200px; position: fixed;top: 550px">
+    <tr>
+        <th>
+            今月の出席率<br>
+            <a><?php echo $student['attend_rate_month'] ?></a>
+            <br><br>
+        </th>
+        <th>
+            遅刻数<br>
+            <a id="late"><?php echo $student['late'] ?></a>
+            <br><br>
+        </th>
+
+        <th>
+            欠席数<br>
+            <a id="absence"><?php echo $student['absence'] ?></a>
+            <br><br>
+        </th>
+
+        <th>
+            早退数<br>
+            <a id="absence"><?php echo $student['early'] ?></a>
+            <br><br>
+        </th>
+
+        <th>
+            出席率<br>
+            <a id="absence"><?php echo $student['attend_rate'] ?></a>
+            <br><br>
+        </th>
+    </tr>
+</table>
+
+
+<form action="a.php" method="get">
     <input type="hidden" name="student_id" value="<?=$student['student_id']?>">
-    <input type="submit" value="グラフ表示">
+    <input type="submit" value="グラフ表示"
+           style="display: block;
+  background-color: #afc6e2;
+  padding: 10px 20px;
+  text-decoration: none;
+  right: 100px;
+  bottom: 100px;
+  color: white;
+  border-radius: 3px;
+  position:absolute;">
 </form>
 </body>
 </html>

@@ -38,6 +38,36 @@
     top: 280px;
     right: 235px;
 }
+.gu{
+    background-color: #9fb7d4;
+    color: white;
+    top: 150px;
+    width: 230px;
+    left: 370px;
+    position: fixed;
+    border-radius: 5px;
+}
+h2#gu_label{
+    width: fit-content;
+    line-height: 50px;
+    margin: auto;
+    top: 50px;
+}
+
+button#gu_ok{
+    display: block;
+    background-color: #afc6e2;
+    -webkit-appearance: unset;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    right: 135px;
+    bottom: 25px;
+    text-decoration: none;
+    color: white;
+    margin: 10px;
+    border-radius: 3px;
+}
+
 .zi{
     background-color: #9fb7d4;
     color: white;
@@ -47,7 +77,7 @@
     position: fixed;
     border-radius: 5px;
 }
-#zi_label{
+h2#zi_label{
     width: fit-content;
     line-height: 50px;
     margin: auto;
@@ -75,4 +105,26 @@ table{
     color: white;
     margin: 10px;
     border-radius: 3px;
+}
+
+#change_ok{
+    display: block;
+    background-color: #afc6e2;
+    -webkit-appearance: unset;
+    padding: 10px 20px;
+    position: absolute;
+    box-sizing: border-box;
+    right: 235px;
+    top: 300px;
+    text-decoration: none;
+    color: white;
+    margin: 10px;
+    border-radius: 3px;
+}
+
+input#name_change{
+    border: 1px solid #ccc;
+    position: absolute;
+    top: 250px;
+    left: 450px;
 }

@@ -55,9 +55,9 @@ input#img{
     border: 1px solid #ccc; /* 枠線 */
 
 }
-#ac table{
+table{
     position: absolute;
-    top: 130px;
+    top: 200px;
     left: 340px;
 }
 .ad th{
@@ -67,11 +67,15 @@ input#img{
     margin: 25px;
     /*width: 100px;*/
 }
+td{
+    height: 70px;
+}
+
 th:nth-child(1) {
-    width: 70px;
+    width: 170px;
 }
 th:nth-child(2) {
-    width: 40px;
+    width: 140px;
 }
 th:nth-child(3){
     width: 150px;

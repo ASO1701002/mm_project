@@ -45,7 +45,7 @@ div#c{
     left: 450px;
 }
 div#e{
-    width: fit-content;
+    width: 550px;
     font-size: 30px;
     position: absolute;
     top: 450px;
@@ -58,6 +58,9 @@ div#e{
     position: absolute;
     top: 500px;
     left: 550px;
+
+    display: flex;
+
 }
 
 #sub{
@@ -68,10 +71,18 @@ div#e{
     padding: 10px 20px;
     position: absolute;
     box-sizing: border-box;
-    right: 235px;
-    bottom: 10px;
+    /*right: 235px;*/
+    /*bottom: 10px;*/
+    bottom: 0;
     text-decoration: none;
     color: white;
     margin: 10px;
     border-radius: 5px;
+}
+.list{
+    width: 450px;
+}
+.btn{
+    width: 100px;
+    position: relative;
 }

@@ -126,11 +126,6 @@
 <a href="./TeacherPro.php" ><?php echo h($_SESSION['username']) ?></a>
 
 
-<!-- 上のメニューバー -->
-<div class="bu">
-    <!--    <a href="AttendanceConfirmation.php" id="attend">状況管理</a>-->
-</div>
-
 <!--検索バー -->
 <div class="container">
     <input type="text" placeholder="Search..." id="sa-ch">
