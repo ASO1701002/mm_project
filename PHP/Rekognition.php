@@ -20,10 +20,8 @@ use Aws\Rekognition\RekognitionClient;
 
 <?php
 //変数宣言スペース
-
-//↑に貼り付け
-
-$rekognition = new RekognitionClient($options);
+//
+//認証情報のため、gitには上げていません。
 ?>
 
 <?php
