@@ -91,12 +91,7 @@ if(isset($_SESSION['current_class_id']) and isset($_SESSION['current_class_name'
         <!-- exec_selectによる折り返し処理:開始 -->
 
         <tbody>
-        <?php foreach ($student as $st){ ?>
-            <tr>
-                <th><?=htmlspecialchars($st['student_num']) ?></th>
-                <th><a href="TeacherPro.php"><?=htmlspecialchars($st['student_name'])?></a></th>
-            </tr>
-        <?php } $pdo=null; ?>
+
         </tbody>
     </table>
 </form>
