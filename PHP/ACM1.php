@@ -1,10 +1,11 @@
 <?php
 require_once 'functions.php';
+require_once './function/db.php';
+
 require_logined_session();
-require 'db.php';
+?>
 
-header('Content-Type:text/html; charset=UTF-8');
-
+<?php
 if(isset($_POST['class_id']) and isset($_POST['class_name'])){
     $class_id = $_POST['class_id'];
     $class_name = $_POST['class_name'];
@@ -18,11 +19,16 @@ if(isset($_POST['class_id']) and isset($_POST['class_name'])){
         header('Location: index.php');
     }
 }
-if(isset($_GET['time']) and isset($_GET['day'])){
+//表示する日付を設定
+if(isset($_GET['day'])){
     $date = $_GET['day'];
-    $time = $_GET['time'];
 }else{
     $date = date("Y-m-d");
+}
+//表示する時限を設定
+if(isset($_GET['time'])){
+    $time = $_GET['time'];
+}else{
     $time = 1;
 }
 
@@ -90,50 +96,47 @@ try{
         </div>
     </div>
 </div>
+<div id="class" class="title_menu">
+    <script type="text/javascript">
+        function selectClass() {
+            var element = document.getElementById("class_id");
+            var selectedIndex = element.selectedIndex;
+            var timeSelector = document.getElementById("time_period");
 
-        <div id="class" class="title_menu">
-            <script type="text/javascript">
-                function selectClass() {
-                    var element = document.getElementById("class_id");
-                    var selectedIndex = element.selectedIndex;
-                    var timeSelecter = document.getElementById("time_period");
-                    var form = document.createElement("form");
-                    if(timeSelecter.selectedIndex == -1){
-                        form.setAttribute("action", location.href.replace(/\?.*$/,"") + '?day=' + $('#datepicker').val() + '&time=1');
-                    }else{
-                        form.setAttribute("action", location.href.replace(/\?.*$/,"") + '?day=' + $('#datepicker').val() + '&time=' + timeSelecter.options[timeSelecter.selectedIndex].value);
-                    }
-                    form.setAttribute("method", "post");
-                    form.style.display = "none";
-                    document.body.appendChild(form);
-                    var data = {
-                        'class_id':element.options[selectedIndex].dataset.id,
-                        'class_name':element.options[selectedIndex].dataset.name,
-                    }
-                    for (var paramName in data) {
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'hidden');
-                        input.setAttribute('name', paramName);
-                        input.setAttribute('value', data[paramName]);
-                        form.appendChild(input);
-                    }
-                    form.submit();
-                }
-            </script>
-            <select id="class_id" onchange="selectClass()">
-                <!-- 折り返し処理 -->
-                <div id="re">
-                    <?php foreach($_SESSION['class'] as $d){?>
-                        <!--flex-grow: 1;-->
-                        <option data-id="<?=h($d['id'])?>" data-name="<?=h($d['name'])?>"
-                            <?php if($d['id'] == $class_id){echo 'selected';}?>>
-                            <?=h($d['name'])?>
-                        </option>
-                    <?}?>
-                </div>
-            </select>
+            var form = document.createElement("form");
+            if(timeSelector.selectedIndex === -1){
+                form.setAttribute("action", location.href.replace(/\?.*$/,"") + '?day=' + $('#datepicker').val() + '&time=1');
+            }else{
+                form.setAttribute("action", location.href.replace(/\?.*$/,"") + '?day=' + $('#datepicker').val() + '&time=' + timeSelector.options[timeSelector.selectedIndex].value);
+            }
+            form.setAttribute("method", "post");
+            form.style.display = "none";
+            document.body.appendChild(form);
+            var data = {
+                'class_id':element.options[selectedIndex].dataset.id,
+                'class_name':element.options[selectedIndex].dataset.name,
+            }
+            for (var paramName in data) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'hidden');
+                input.setAttribute('name', paramName);
+                input.setAttribute('value', data[paramName]);
+                form.appendChild(input);
+            }
+            form.submit();
+        }
+    </script>
+    <select id="class_id" onchange="selectClass()">
+        <!-- 折り返し処理 -->
+        <div id="re">
+            <?php foreach($_SESSION['class'] as $d){?>
+                <option data-id="<?=h($d['id'])?>" data-name="<?=h($d['name'])?>"
+                    <?php if($d['id'] == $class_id){echo 'selected';}?>>
+                    <?=h($d['name'])?>
+                </option>
+            <?}?>
         </div>
-    </div>
+    </select>
 </div>
 
 <!-- 先生の名前 -->
@@ -156,19 +159,15 @@ try{
         <li><a href="./logout.php?token=<?=h(generate_token())?>">ログアウト</a></li>
     </ul>
 
-
-
     <!--写真が入ります-->
-    <form action="update.php" method="post" >
-
+    <form action="Update.php" method="post" >
         <!-- 時間割選択 -->
-
-        <select name="time_period"  id="class_name" onchange="cale()">
-            <?php //$_GET['time']が指定されている場合はselected修飾を付ける。
+        <select id="time_period" name="time_period" onchange="cale()">
+            <?php
             foreach ($time_period_array as $row){
-                $htmlText = "<option value='".$row['time_period']."'";
-                if(isset($_GET['time']) && $i == $_GET['time']){$htmlText .= 'selected';}
-                $htmlText .= ">".$row['time_period']."限目</option>";
+                $htmlText = "<option value='".$row['time']."'";
+                if(isset($_GET['time']) && $row['time']==$_GET['time']){$htmlText .= 'selected';}
+                $htmlText .= ">".$row['time']."限目</option>";
                 echo $htmlText;
             } ?>
         </select>
@@ -176,7 +175,6 @@ try{
         <!-- 日付の選択 -->
         <input name="datepicker" type="text" id="datepicker" onchange="cale()" value="<? if(!empty($_GET['day']))echo $_GET['day']?>">
         <ul id="myList">
-
         <?php
             if(!isset($error)){
                 echo "
@@ -218,20 +216,15 @@ try{
             }
         ?>
         </ul>
-        <input type="hidden" name="class_id" value="<?=$class_id ?>">
-        <input type="hidden" name="class_name" value="<?=$class_name ?>">
-        <button type=“submit”>変更</button>
+        <button type="submit">変更</button>
         <br>
         <br>
         <div id="sums">
             <?if(isset($student))echo count($student)."人中".$attend_presence."人出席しました。"?>
         </div>
-
     </form>
 
 </div>
-
-
 
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
@@ -246,32 +239,19 @@ try{
                 $('#datepicker').datepicker('setDate', new Date());
             }
         });
-        function time() {
-
-        }
 
         function cale () {
             // クラスIDを自分に渡すURLを組み立てる
             let datapicker = $('#datepicker').val();
             // 選択されたオプションのバリューを取得する
-            let date = $("#class_name").val();
-
-
-
+            let date = $("#time_period").val();
+            if(date===null || date===undefined){date=1}
             // クラスIDを自分に渡すURLを組み立てる
             let params = getParameter();
-            params['class_id'] = <?php echo $class_id ?>;
-            params['class_name'] = "<?php echo $class_name ?>";
             params['day'] = datapicker;
             params['time'] = date;
             let url = setParameter(params);
-            console.log(url);
-
             location.href = url;
-
-            <?php
-            $_SESSION['time']=$time;
-            ?>
         }
 
         //パラメータを設定したURLを返す

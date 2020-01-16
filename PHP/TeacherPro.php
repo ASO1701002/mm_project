@@ -2,8 +2,7 @@
 require_once 'functions.php';
 require_logined_session();
 
-header('Content-Type:text/html; charset=UTF-8');
-require 'db.php';
+require_once './function/db.php';
 ?>
 
 <?php

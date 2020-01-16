@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__ . '/functions.php';
-require_unlogined_session();
-require 'db.php';
+require_once 'functions.php';
+require_once './function/db.php';
 
+require_unlogined_session();
 foreach (['teacher_id','password','token','submit'] as $key){
     $key=(string)filter_input(INPUT_POST,$key);
 }

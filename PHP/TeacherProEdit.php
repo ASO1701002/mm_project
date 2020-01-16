@@ -2,8 +2,7 @@
 require_once 'functions.php';
 require_logined_session();
 
-header('Content-Type:text/html; charset=UTF-8');
-require 'db.php';
+require_once './function/db.php';
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +47,6 @@ require 'db.php';
         <li><a href="Group.php">グループ管理</a></li>
         <li><a href="Users.php">ユーザー検索</a></li>
         <li><a href="Resuser.php">管理者ユーザー一覧</a></li>
-        <li><a href="Groupmake.php">グループ作成</a></li>
         <li><a href="Classroom.php">教室管理</a></li>
         <li><a href="./logout.php?token=<?=h(generate_token())?>">ログアウト</a></li>
     </ul>

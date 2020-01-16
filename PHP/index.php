@@ -1,17 +1,16 @@
 <?php
 require_once 'functions.php';
-require_logined_session();
+require_once './function/db.php';
 
-header('Content-Type:text/html; charset=UTF-8');
-require 'db.php';
+require_logined_session();
 ?>
 <?php
 //表示するグループのclass_idを設定。
 //初回表示時はセッションから、1番上のclass_idが利用され、
 //指定された場合は、getで受け取った内容を設定する。
-if(isset($_GET['class_id']) and isset($_GET['class_name'])){
-    $class_id=$_GET['class_id'];
-    $class_name=$_GET['class_name'];
+if(isset($_POST['class_id']) and isset($_POST['class_name'])){
+    $class_id=$_POST['class_id'];
+    $class_name=$_POST['class_name'];
     $_SESSION['current_class_id'] = $class_id;
     $_SESSION['current_class_name'] = $class_name;
 }else{
@@ -95,29 +94,28 @@ try{
 
         <!-- 上のメニューバー -->
         <script>
-            function post(url) {
-                function selectClass() {
-                    var element = document.getElementById("class_id");
-                    var selectedIndex = element.selectedIndex;
-                    var form = document.createElement("form");
-                    form.setAttribute("action", url);
-                    form.setAttribute("method", "post");
-                    form.style.display = "none";
-                    document.body.appendChild(form);
-                    var data = {
-                        'class_id':element.options[selectedIndex].dataset.id,
-                        'class_name':element.options[selectedIndex].dataset.name,
-                    };
-                    for (var paramName in data) {
-                        var input = document.createElement('input');
-                        input.setAttribute('type', 'hidden');
-                        input.setAttribute('name', paramName);
-                        input.setAttribute('value', data[paramName]);
-                        form.appendChild(input);
-                    };
-                    form.submit();
-                }
+            function selectClass() {
+                var element = document.getElementById("class_id");
+                var selectedIndex = element.selectedIndex;
+                var form = document.createElement("form");
+                form.setAttribute("action", "");
+                form.setAttribute("method", "post");
+                form.style.display = "none";
+                document.body.appendChild(form);
+                var data = {
+                    'class_id':element.options[selectedIndex].dataset.id,
+                    'class_name':element.options[selectedIndex].dataset.name,
+                };
+                for (var paramName in data) {
+                    var input = document.createElement('input');
+                    input.setAttribute('type', 'hidden');
+                    input.setAttribute('name', paramName);
+                    input.setAttribute('value', data[paramName]);
+                    form.appendChild(input);
+                };
+                form.submit();
             }
+
         </script>
         <div class="bu">
             <a href="./ResponsibleEdit.php<?="?grope_id=".$class_id?>" id="edit">編集</a>

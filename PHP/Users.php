@@ -1,10 +1,10 @@
 <?php
 require_once 'functions.php';
-require_logined_session();
+require_once './function/db.php';
 
-header('Content-Type:text/html; charset=UTF-8');
-require 'db.php';
+require_logined_session();
 ?>
+
 <?php
 if(isset($_SESSION['current_class_id']) and isset($_SESSION['current_class_name'])){
     $class_id = $_SESSION['current_class_id'];

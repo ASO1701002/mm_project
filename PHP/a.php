@@ -1,28 +1,4 @@
 <?php
-//
-////DB接続
-//require_once 'functions.php';
-//require_logined_session();
-//
-//header('Content-Type:text/html; charset=UTF-8');
-//require 'db.php';
-//if (isset($_GET['class_id'])) {
-//    $class_id = $_GET['class_id'];
-//} else {
-//    //login.phpから飛んできた1行目のclass_idが入る。
-//    $class_id = $_SESSION['class']['id'][0];
-//}
-//$student = prepareQuery("select * from load_responsible_1 where class_id = ?", [$class_id]);
-//
-//try {
-//} catch (PDOException $exception) {
-//    die('接続エラー:' . $exception->getMessage());
-//}
-//try {
-//} catch (PDOException $exception) {
-//    die('接続エラー:' . $exception->getMessage());
-//}
-
 //フレームワークでグラフ作成
 include ("../JpGraph/src/jpgraph.php");
 include ("../JpGraph/src/jpgraph_line.php");

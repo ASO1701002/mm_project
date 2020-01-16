@@ -1,10 +1,11 @@
 <?php
     require_once 'functions.php';
+    require_once './function/db.php';
+
     require_logined_session();
-    require 'db.php';
+?>
 
-    header('Content-Type:text/html; charset=UTF-8');
-
+<?php
     if(isset($_GET['class_id'])){
         $class_id = $_GET['class_id'];
         $class_name = $_GET['class_name'];
@@ -146,7 +147,7 @@
 
     <!--写真が入ります-->
     <!--グラフに飛ぶよん-->
-    <form action="update.php" method="post">
+    <form action="Update.php" method="post">
         <input type="image" src="../image/noimage.gif">
 
         <p>

@@ -1,5 +1,5 @@
 <?php
-require 'db.php';
+require_once './function/db.php';
 ?>
 
 <?php
@@ -56,8 +56,8 @@ require 'db.php';
 
         //出席情報取得API -electron
         if ($_POST['request_flg'] == 'faceValidation') {
-            if(isset($_POST['subject_id']) and isset($_POST['faceImageName'])) {
-                $result = faceValidation($_POST['faceImageName']);
+            if(isset($_POST['subject_id']) and isset($_POST['faceImageName']) and isset($_POST['class_id'])) {
+                $result = faceValidation($_POST['faceImageName'],$_POST['class_id']);
                 if ($result != false) {
                     print json_encode(getPersonAttendanceInfomation($result, $_POST['subject_id']), JSON_PRETTY_PRINT);
                 }

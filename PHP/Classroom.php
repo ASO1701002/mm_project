@@ -1,8 +1,8 @@
 <?php
-require 'db.php';
+require_once './function/db.php';
 require_once 'functions.php';
+
 require_logined_session();
-header('Content-Type:text/html; charset=UTF-8');
 ?>
 <?php
 if(isset($_SESSION['current_class_id']) and isset($_SESSION['current_class_name'])){

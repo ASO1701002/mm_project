@@ -1,42 +1,44 @@
-
 <?php
-require '../vendor/autoload.php';
+require_once dirname(__FILE__).'/../../vendor/autoload.php';
+require_once dirname(__FILE__).'/awsCredentials.php';
 use Aws\Rekognition\RekognitionClient;
 ?>
-
-<?php
-/* 作業スペース */
-
-?>
-<?php
+<?php //function
 /*
     serchFace : 事前にS3に保存した画像をコレクションから検索する
     addImageToIndex : 顔を新たにコレクションに追加する。
     indexedFaceList : コレクションに追加されている顔のリストを表示する
     deleteIndex : コレクションからメタデータを削除する
     faceValidation : 顔認証を行い、80%以上の一致率である場合、該当する写真の出力ID(学生ユーザーID)を返す
+    createCollection : 新たにコレクションを作成する
 */
 ?>
-
 <?php
 //変数宣言スペース
 //
-//認証情報のため、gitには上げていません。
+$collectionID = 'mm-project-';
+$indexBucketName = 'mm-face-log';
+$registerBucketName = 'mm-face-register';
+$logBucketName = 'mm-face-log';
+
+$rekognition = new RekognitionClient($awsCredentialsOptions);
+?>
+<?php
+/* 作業スペース */
 ?>
 
 <?php
-
-function serchFace($imageName){
+function serchFace($imageName,$class_id){
     global $rekognition;
     global $collectionID;
-    global $validateBucketName;
+    global $logBucketName;
 
     $result = $rekognition->searchFacesByImage([
-        'CollectionId' => $collectionID,
+        'CollectionId' => $collectionID.$class_id,
         'FaceMatchThreshold' => 0.8,
         'Image' => [
             'S3Object' => [
-                'Bucket' => $validateBucketName,
+                'Bucket' => $logBucketName,
                 'Name' => $imageName,
                 'version' => "0",
             ],
@@ -47,14 +49,14 @@ function serchFace($imageName){
     return ['Similarity' => $result['FaceMatches']['Face']['Similarity'], 'ExternalImageID' => $result['FaceMatches']['Face']['ExternalImageId']];
 }
 
-function addImageToIndex($ExternalImageID, $imageS3Name){
+function addImageToIndex($ExternalImageID, $imageS3Name, $class_id){
     global $rekognition;
     global $collectionID;
-    global $indexBucketName;
+    global $registerBucketName;
 
     //既に利用されているExternalImageID一覧を取得し、ExternalImageIDの重複登録を防止する。
     $usedExternalImageIDList = [];
-    $IndexedList = indexedFaceList()['Faces'];
+    $IndexedList = indexedFaceList($class_id)['Faces'];
     foreach ($IndexedList as $row) {
         $usedExternalImageIDList[] = $row['ExternalImageId'];
     }
@@ -64,12 +66,12 @@ function addImageToIndex($ExternalImageID, $imageS3Name){
     }
 
     $result = $rekognition->indexFaces([
-        'CollectionId' => $collectionID, // REQUIRED
+        'CollectionId' => $collectionID.$class_id, // REQUIRED
         'DetectionAttributes' => ['DEFAULT'],
         'ExternalImageId' => $ExternalImageID,
         'Image' => [ // REQUIRED
             'S3Object' => [
-                'Bucket' => $indexBucketName,
+                'Bucket' => $registerBucketName,
                 'Name' => $imageS3Name,
                 'version' => "0",
             ],
@@ -80,12 +82,12 @@ function addImageToIndex($ExternalImageID, $imageS3Name){
     return $result;
 }
 
-function indexedFaceList(){
+function indexedFaceList($class_id){
     global $rekognition;
     global $collectionID;
 
     $result = $rekognition->listFaces([
-        'CollectionId' => $collectionID,
+        'CollectionId' => $collectionID.$class_id,
         'MaxResults' => 100,
         'NextToken' => '',
     ]);
@@ -94,16 +96,15 @@ function indexedFaceList(){
 
 //一つのExternalImageIDが重複して登録されることは、基本的には起こらないが、
 //万が一、重複して登録されているExternalImageIDを指定した場合、最後の一件の削除に対するresultのみがreturnされる
-function deleteIndex($ExternalImageID){
+function deleteIndex($ExternalImageID, $class_id){
     global $rekognition;
     global  $collectionID;
 
-    $result = '指定した$ExternalImageIDのメタデータは存在しません';
-    $IndexedList = indexedFaceList()['Faces'];
+    $IndexedList = indexedFaceList($class_id)['Faces'];
     foreach ($IndexedList as $row) {
         if($row['ExternalImageId'] == $ExternalImageID){
             $result = $rekognition->deleteFaces([
-                'CollectionId' => $collectionID,
+                'CollectionId' => $collectionID.$class_id,
                 'FaceIds' => [$row['FaceId']],
             ]);
         }
@@ -112,8 +113,8 @@ function deleteIndex($ExternalImageID){
 }
 
 //顔認証を行い、80%以上の一致率である場合、該当する写真の出力ID(学生ユーザーID)を返す
-function faceValidation($imageName){
-    $validationResult = serchFace($imageName);
+function faceValidation($imageName,$class_id){
+    $validationResult = serchFace($imageName,$class_id);
     if($validationResult['Similarity'] > 80){
         //一致率80%以上の場合認証成功と捉え、[本人の学生ユーザーID,学生ユーザー名,合計出席率,当月の出席率] を返す
         return $validationResult['ExternalImageID'];
@@ -121,28 +122,14 @@ function faceValidation($imageName){
     return false;
 }
 
-////コレクションを作成する。
-//function createCollection($collectionName){
-//    global $rekognition;
-//
-//    $result = $rekognition-> createCollection([
-//        'CollectionId' => $collectionName
-//    ]);
-//    return $result;
-//}
+//コレクションを作成する。
+function createCollection($class_id){
+    global $rekognition;
+    global $collectionID;
 
-////filesで送信した画像をコレクションから検索する
-//    $file = $_FILES['']['tmp_name'];
-//    if (!is_uploaded_file($file)) {
-//        return;
-//    }
-//    $result = $rekognition->searchFacesByImage([
-//        'CollectionId' => ,
-//        'FaceMatchThreshold' => 0.8,
-//        'Image' => [
-//            'Bytes' => file_get_contents($file)
-//        ],
-//        'MaxFaces' => 1,
-//        'QualityFilter' => 'NONE',
-//    ]);
+    $result = $rekognition-> createCollection([
+        'CollectionId' => $collectionID.$class_id
+    ]);
+    return $result;
+}
 ?>
